@@ -101,7 +101,8 @@ int menuitem;
 #define RFM95_RST    8  // 
 // Change to 434.0 or other frequency, must match RX's freq!
 #define RF95_FREQ 868.0
-bool debug =false;
+bool debug = false;
+//bool debug = true;
 bool led_state = false;
 // Singleton instance of the radio driver
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
@@ -225,12 +226,20 @@ void loop() {
       display.display();
       if (debug) {
         Serial.print("RSSI: ");
-        Serial.println(rf95.lastRssi(), DEC);
+        Serial.print(rf95.lastRssi(), DEC);
+        Serial.println(" dBm");
+        Serial.print("FreqError: ");
+        Serial.print(rf95.frequencyError(), DEC);
+        Serial.println(" Hz");
+        Serial.print("SNR: ");
+        Serial.print(rf95.lastSNR(), DEC);
+        Serial.println(" dB");
+        Serial.print(rf95.printRegisters(), BIN);
       }
       display.setCursor(0,56);
       display.print("RSSI: ");
       display.print(rf95.lastRssi(), DEC);
-      display.print(" dB");
+      display.print(" dBm");
       display.display();
       // display.setCursor(0,25);
       
